@@ -1,0 +1,51 @@
+import os
+from telegram import Update, ReplyKeyboardMarkup
+from telegram.ext import Application, CommandHandler, MessageHandler, filters
+
+# Обробка команди /start та виведення кнопок
+async def start(update: Update, context):
+    keyboard = [
+        ["інфа про бота", "мій телефон"],
+        ["послать нахуй"],
+        ["получить привітання"]
+    ]
+    reply_markup = ReplyKeyboardMarkup(keyboard, resize_keyboard=True)
+
+    await update.message.reply_text(
+        "бажаю здоров'я! нажми на будь яку кнопку нище:", 
+        reply_markup=reply_markup
+    )
+
+# Обробка натискань на кнопки
+async def handle_buttons(update: Update, context):
+    message_text = update.message.text
+
+    if message_text == "інфа про бота":
+        await update.message.reply_text(
+            "Кажу чесно й відкрито: код для цього бота я благополучно спіздив, "
+            "але вклав у нього багато своїх сил й часу і відредагував його під себе. "
+            "З повагою, GLADIATOR. :)"
+        )
+    elif message_text == "мій телефон":
+        await update.message.reply_text("багато хочеш")
+    elif message_text == "послать нахуй":
+        await update.message.reply_text("іди нахуй")
+    elif message_text == "получить привітання":
+        await update.message.reply_text("вітаю тебе! бажаю щастя, здоров’я, многії літа!")
+    else:
+        await update.message.reply_text("нажми на копку знизу")
+
+def main():
+    # Токен зчитується зі змінних оточення (на Render)
+    # Якщо запускаєш локально на ПК — заміни на TOKEN = "твій_токен"
+    TOKEN = ("8991292270:AAHckjBz1Q6-sIKNKIyE0lTDQhlHJ1DOsu0")
+
+    application = Application.builder().token(TOKEN).build()
+
+    application.add_handler(CommandHandler("start", start))
+    application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_buttons))
+
+    application.run_polling()
+
+if __name__ == "__main__":
+    main()
