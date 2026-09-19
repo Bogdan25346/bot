@@ -83,7 +83,8 @@ def main():
     application.add_handler(CommandHandler("start", start))
     application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_buttons))
 
-keep_alive()
+    keep_alive()
+
     application.run_polling()
 
 if __name__ == "__main__":
