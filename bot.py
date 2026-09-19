@@ -76,7 +76,7 @@ async def handle_buttons(update: Update, context):
 def main():
     # Токен зчитується зі змінних оточення (на Render)
     # Якщо запускаєш локально на ПК — заміни на TOKEN = "твій_токен"
-    TOKEN = ("8991292270:AAHckjBz1Q6-sIKNKIyE0lTDQhlHJ1DOsu0")
+    TOKEN = ("8991292270:AAGJVJURSNvkBD7ICdHoKi8W6yPtO6tU02g")
 
     application = Application.builder().token(TOKEN).build()
 
