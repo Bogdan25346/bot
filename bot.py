@@ -1,4 +1,42 @@
 import os
+from threading import Thread
+from flask import Flask
+
+# ----------------- БЛОК ДЛЯ RENDER (FLASK) -----------------
+app = Flask('')
+
+
+@app.route('/')
+def home():
+  return 'Bot is alive!'
+
+
+def run():
+  # Render автоматически передает номер порта через переменную окружения PORT
+  port = int(os.environ.get('PORT', 8080))
+  app.run(host='0.0.0.0', port=port)
+
+
+def keep_alive():
+  # Запускаем веб-сервер в отдельном потоке, чтобы он не мешал боту
+  t = Thread(target=run)
+  t.start()
+
+
+# Запускаем сервер
+keep_alive()
+# -----------------------------------------------------------
+
+# Твой основной код бота начинается ниже:
+import logging
+from telegram import Update
+from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
+
+# ... (дальше идет твой привычный код бота)
+
+
+
+mport os
 from telegram import Update, ReplyKeyboardMarkup
 from telegram.ext import Application, CommandHandler, MessageHandler, filters
 
